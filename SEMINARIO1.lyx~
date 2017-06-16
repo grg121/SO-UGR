@@ -1,0 +1,691 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass paper
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=magenta"
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "language={C},keywordstyle={\color{blue}},stringstyle={\color{red}},commentstyle={\color{magenta}},morecomment={[l][\color{blue}]{\#}}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+date{}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Los módulos del Kernel de Linux.
+\end_layout
+
+\begin_layout Author
+Geist Fernández, Martín Nahuel.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Núñez Pérez, Alejandro.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Navarro Morales, Francisco.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Redondo Correa, David.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Sandoval Schmidt, Guillermo.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introducción: ¿Qué son los LKM? 
+\end_layout
+
+\begin_layout Standard
+Dado que Linux es un kernel monolítico, se deben añadir todos los controladores
+ para el hardware que necesitemos al compilarlo.
+ Esto significa que a la hora de crear un kernel genérico nos encontramos
+ con que no podemos dar soporte a suficientes dispositivos porque esto significa
+ría darle al kernel un tamaño demasiado grande (incluso imposible).
+ Linux soluciona este problema con módulos de kernel 
+\begin_inset Quotes eld
+\end_inset
+
+cargables
+\begin_inset Quotes erd
+\end_inset
+
+ o de carga dinámica.
+ (LKM, siglas en inglés: Loadable kernel modules), fragmentos de código
+ que sirven para extender las funcionalidades del kernel del sistema operativo
+ sin la necesidad de volver a compilarlo complétamente.
+ También podemos entender por LKM el conjunto de módulos del kernel de Linux,
+ que incluiría a estos módulos de 
+\begin_inset Quotes eld
+\end_inset
+
+carga dinámica
+\begin_inset Quotes erd
+\end_inset
+
+ y a aquellos que van añadidos en el sistema.
+ 
+\end_layout
+
+\begin_layout Standard
+Distribuciones genéricas compilan un núcleo genérico con lo indispensable
+ para arrancar la máquina y carga en tiempo de ejecución los controladores
+ de los dispositivos del equipo que está ejecutando.
+ Otras distribuciones requieren que el usuario seleccione todos los módulos
+ que quiere añadir al kernel y aquellos que quiere poder añadir o eliminar
+ 
+\begin_inset Quotes eld
+\end_inset
+
+dinámicamente
+\begin_inset Quotes erd
+\end_inset
+
+, los llamados Loadable Kernel Modules.
+ 
+\end_layout
+
+\begin_layout Subsection
+¿Qué estructura tienen? 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Fig.
+ 1: http://tldp.org/LDP/lkmpg/2.6/html/x245.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Un módulo es básicamente un archivo de código fuente (por lo general, en
+ C) con un archivo makefile para compilarlo.
+ Los módulos utilizan unas macros para marcar el inicio y finalización del
+ mismo.
+ A partir de la versión 2.2 se utilizan las macros __init y __exit.
+ Ambas se encargan de hacer que las funciones a las que están asociadas
+ se llamen sólo cuando el módulo se utiliza en carga dinámica y no cuando
+ este está compilado en el kernel, ya que su utilidad cargar el módulo (init)
+ y eliminarlo (exit) y esto no tiene sentido para módulos que estan cargados
+ en el kernel (pues estos no se inician ni se detienen sino que están siempre
+ activos).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+/*  
+\end_layout
+
+\begin_layout Plain Layout
+
+ *  hello-3.c - Illustrating the __init, __initdata and __exit macros.
+\end_layout
+
+\begin_layout Plain Layout
+
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <linux/module.h>	/* Needed by all modules */
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <linux/kernel.h>	/* Needed for KERN_INFO */
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <linux/init.h>		/* Needed for the macros */
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+static int hello3_data __initdata = 3;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+static int __init hello_3_init(void)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	printk(KERN_INFO "Hello, world %d
+\backslash
+n", hello3_data);
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+static void __exit hello_3_exit(void)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	printk(KERN_INFO "Goodbye, world 3
+\backslash
+n");
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+module_init(hello_3_init);
+\end_layout
+
+\begin_layout Plain Layout
+
+module_exit(hello_3_exit);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ejemplo de módulo.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+¿Cómo se construyen los módulos?
+\end_layout
+
+\begin_layout Standard
+Para elaborar tu propio módulo basta con crear un programa en C que contenga:
+\end_layout
+
+\begin_layout Enumerate
+Los headers que necesitemos (Por ejemplo: #include <linux/init.h>).
+\end_layout
+
+\begin_layout Enumerate
+La licencia del módulo (Por ejemplo: MODULE_LICENSE(
+\begin_inset Quotes eld
+\end_inset
+
+GPL
+\begin_inset Quotes erd
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Las funciones de inicialización y destrucción ya comentadas (init y exit).
+\end_layout
+
+\begin_layout Enumerate
+El código que queremos añadir al kernel.
+\end_layout
+
+\begin_layout Standard
+Además de esto, hay que crear un makefile para compilar el módulo.
+ Tras generar los binarios adecuados podemos cargar el módulo con ismod.
+ 
+\end_layout
+
+\begin_layout Standard
+Si lo que quieres es instalar determinados módulos (existentes) o incluso
+ controladores, debes saber que los módulos adicionales del kernel pueden
+ ser cargados duante el aranque configurándolos como una lista estática
+ en los archivos residentes en /etc/modules-load.d ; cada archivo de configuració
+n es nombrado siguiendo el formato /etc/modules.d/<programa>.conf ; los archivos
+ de configuración continen simplemente una lista de los nombres de los módulos
+ dle núcleo a cargar, separadas por saltos de línea.
+ Las líneas vacías y las líneas cuyo primer carácter sea # o ; serán ignoradas
+ (comentarios).
+ 
+\end_layout
+
+\begin_layout Standard
+Si queremos hacer más sencilla la incorporación de módulos al kernel, debemos
+ saber que el kernel Linux se encuentra en /usr/src/linux-X.Y y que existe
+ el archivo .config en dicho directorio donde se pueden seleccionar los módulos
+ que queremos añadir al kernel (compilados) o como módulos de carga dinámica.
+ El proceso común para modificar el kernel del sistema en la mayoría de
+ las distribuciones suele ser:
+\end_layout
+
+\begin_layout Enumerate
+Situarse en el directorio /usr/src/linux-X.Y donde X.Y es la versión a modificar.
+ Es conveniente hacer un backup del archivo de configuración antes de modificar
+ el que tenemos.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Para configurar de forma más sencilla el archivo de configuración del kernel
+ (.config) se recomienda utilizar la herramienta 
+\begin_inset Quotes eld
+\end_inset
+
+make menuconfig
+\begin_inset Quotes erd
+\end_inset
+
+ que ejecuta la 
+\begin_inset Quotes eld
+\end_inset
+
+Linux Kernel Configuration
+\begin_inset Quotes erd
+\end_inset
+
+ de una forma más visual, con 
+\begin_inset Quotes eld
+\end_inset
+
+casillas
+\begin_inset Quotes erd
+\end_inset
+
+ que podemos marcar o desmarcar para seleccionar qué módulos añadir y cuáles
+ no, y además, seleccionar si dichos módulos se quieren configurar para
+ cargarlos dinámicamente o se quieren incorporar al kernel.
+\end_layout
+
+\begin_layout Enumerate
+Cuando se termina la configuración pulsamos en exit y guardamos el archivo
+ de configuración.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Después compilamos cualquier módulo que hayamos configurado con 
+\begin_inset Quotes eld
+\end_inset
+
+make modules
+\begin_inset Quotes erd
+\end_inset
+
+ y utilizamos 
+\begin_inset Quotes eld
+\end_inset
+
+make modules_install
+\begin_inset Quotes erd
+\end_inset
+
+ para instalar los módulos del kernel (aunque no se hubiera compilado ninguno).
+\end_layout
+
+\begin_layout Enumerate
+Finalmente utilizamos make install para copiar el nuevo kernel y los ficheros
+ asociados a los directorios apropiados.
+ Además, se instalaran los ficheros del kernel en el directorio /boot, este
+ comando ejecuta el script /sbin/new-kernel-pkg que constrye una nueva imagen
+ initrd y añade nuevas entradas para el fichero de configuración del gestor
+ de arranque (grub, generalmente).
+\end_layout
+
+\begin_layout Standard
+El Kernel en Linux está formado por 5 subsistemas:
+\end_layout
+
+\begin_layout Standard
+- El planificador de procesos (sched).
+\end_layout
+
+\begin_layout Standard
+- El administrador o gestor de la memoria (mm).
+\end_layout
+
+\begin_layout Standard
+- El sistema de archivos virtual o conmutador de sistema de archivos virtual
+ (vfs, virtual filesystem switch).
+\end_layout
+
+\begin_layout Standard
+- La interfaz de red (net).
+ - La comunicación entre procesos (ipc, Inter-Process Communication).
+\end_layout
+
+\begin_layout Section
+Órdenes para manejar los módulos.
+\end_layout
+
+\begin_layout Standard
+Basándonos en la información que proporciona el comando man sobre módulos
+ podemos señalar que 
+\emph on
+modprobe
+\emph default
+ es la orden genérica para modificar manualmente módulos de carga dinámica.
+ Sirve para instalar, eliminar, eliminar en cascada (con dependencias),
+ entre otras.
+\end_layout
+
+\begin_layout Standard
+Uso: 
+\end_layout
+
+\begin_layout Standard
+modprobe [-v] [-V] [-C config-file] [-n] [-i] [-q] [-b] [modulename] [module
+ parameters...] 
+\end_layout
+
+\begin_layout Standard
+modprobe [-r] [-v] [-n] [-i] [modulename...] 
+\end_layout
+
+\begin_layout Standard
+modprobe [-c] modprobe [--dump-modversions] [filename]
+\end_layout
+
+\begin_layout Standard
+Además de modprobe tenemos otros comandos que realizan las mismas tareas
+ pero de forma más específica:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+ismod
+\emph default
+ sirve para insertar (instalar) núevos módulos al kernel de linux
+\begin_inset Newline newline
+\end_inset
+
+insmod [filename] [module options...]
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+rmmod
+\emph default
+ sirve para eliminar (desinstalar) módulos del kernel de linux.
+\begin_inset Newline newline
+\end_inset
+
+rmmod [-f] [-s] [-v] [modulename] 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+lsmod
+\emph default
+ sirve para listar los módulos cargados.
+\begin_inset Newline newline
+\end_inset
+
+lsmod
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+modinfo
+\emph default
+ sirve para mostrar información de un módulo determinado.
+\begin_inset Newline newline
+\end_inset
+
+modinfo [-0] [-F field] [-k kernel] [modulename|filename...] 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+depmod
+\emph default
+ sirve para ver las dependencias de un módulo determinado.
+\begin_inset Newline newline
+\end_inset
+
+depmod [-b basedir] [-e] [-E Module.symvers] [-F System.map] [-n] [-v] [-A]
+ [-P prefix] [-w] [version] 
+\end_layout
+
+\begin_layout Standard
+Hay que entender que estos comandos trabajan con 
+\begin_inset Quotes eld
+\end_inset
+
+loadable modules
+\begin_inset Quotes erd
+\end_inset
+
+, es decir, con módulos que NO están compilados en el kernel y que se añaden
+ de forma dinámica durante la ejecución del sistema y pueden ser desactivados
+ (unloaded) durante esta ejecución.
+ Esto es especialmente interesante para manejar los distintos controladores
+ de cada dispositivo.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\end_layout
+
+\end_body
+\end_document

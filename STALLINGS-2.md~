@@ -1,0 +1,10 @@
+Tipos de planificación de procesos:
+
+* A largo plazo: al crear un nuevo proceso le asigna un estado y es el encargado de finalizar procesos.
+* A medio plazo: se encarga del swaping de procesos entre memoria principal y secundaria. 
+* A corto plazo: qué proceso ejecutar en este momento. 
+
+
+## A largo plazo 
+
+

@@ -1,0 +1,1279 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass extreport
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package babel
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "language={C++},keywordstyle={\color{blue}},stringstyle={\color{red}},commentstyle={\color{magenta}},morecomment={[l][\color{blue}]{\#}}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+date{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Sistemas Operativos - Portafolio de prácticas
+\end_layout
+
+\begin_layout Author
+Francisco Navarro Morales
+\end_layout
+
+\begin_layout Part*
+Módulo I Administración de Linux
+\end_layout
+
+\begin_layout Section*
+Sesión 1: Herramientas de administración básicas.
+\end_layout
+
+\begin_layout Subsection*
+Administración de usuarios y grupos en Linux
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+whoami: nombre del usuario actual 
+\end_layout
+
+\begin_layout Plain Layout
+su 
+\begin_inset Quotes fld
+\end_inset
+
+usuario
+\begin_inset Quotes frd
+\end_inset
+
+: swap user, cambiar de usuario (por defecto root) 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cada usuario tiene un nombre único y un identificador numérico (UID).
+ Del mismo modo, cada grupo de usuarios tiene un nombre único y un identificador
+ (GID)
+\end_layout
+
+\begin_layout Subsubsection*
+/etc/passwd
+\end_layout
+
+\begin_layout Standard
+Contiene una linea por cada usuario.
+ Cada linea tiene seis campos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box ovalbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+grg121:x:1000:1000::/home/grg121:/bin/bash
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Nombre: es único para cada usuario y aquel con el que estos se loguean.
+\end_layout
+
+\begin_layout Enumerate
+Contraseña
+\begin_inset space ~
+\end_inset
+
+encriptada: debería tener 13 carácteres, si contiene una cadena con un número
+ distinto de carácteres significa que el login de ese usuario está desactivado
+ (ya que no se podría desencriptar una contraseña que no tenga 13 carácteres).
+ Sin embargo, 
+\emph on
+este campo es ignorado si existe el archivo /etc/shadow
+\emph default
+ y se rellena con una 
+\emph on
+x
+\emph default
+ (o cualquier otro string/char).
+ 
+\emph on
+Si el campo está vacío, entonces se puede acceder a la cuenta sin necesidad
+ de usar contraseña.
+ 
+\end_layout
+
+\begin_layout Enumerate
+UID: identifica al usuario.
+ La cuenta root tiene el valor 0.
+ Dos o más usuarios pueden tener el mismo UID, en ese caso lo que ocurre
+ es que existe un único usuario al que se puede acceder con distintos nombres
+ y contraseñas, pero que tiene un directorio home y unos archivos de configuraci
+ón 
+\begin_inset Quotes fld
+\end_inset
+
+compartidos
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+GID: identificador del primer grupo al que pertenece el usuario, los demás
+ grupos aparecen en /etc/group.
+\end_layout
+
+\begin_layout Enumerate
+Comentario: contiene información sobre el usuario que es mostrada por algunos
+ programas.
+\end_layout
+
+\begin_layout Enumerate
+Directorio
+\begin_inset space ~
+\end_inset
+
+home: ruta del directorio home del usuario.
+\end_layout
+
+\begin_layout Enumerate
+Login
+\begin_inset space ~
+\end_inset
+
+shell: contiene el programa cuyo control es transferido al usuario al logearse,
+ normalmente se trata de un shell, especialmente /bin/bash.
+ Si el campo está vacío, el shell por defecto es /bin/sh.
+ Se si desea que el usuario no pueda entrar al sistema se le puede asignar
+ a este campo los nombres 
+\emph on
+/bin/false
+\emph default
+ o 
+\emph on
+/sbin/nologin.
+ 
+\emph default
+También se puede establecer como shell un archivo ejecutable, de forma que
+ cuando el usuario entre al sistema se ejecute dicho archivo y al finalizar
+ su ejecución se acabe la sesión del usuario.
+\end_layout
+
+\begin_layout Subsubsection*
+/etc/shadow
+\end_layout
+
+\begin_layout Standard
+Este archivo existe para separar la información pública (que continua en
+ passwd) de la privada (que pasa a estar, de /etc/passwd a /etc/shadow)
+ como las contraseñas (encriptadas) de los usuarios.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+/etc/group
+\end_layout
+
+\begin_layout Standard
+Contiene una linea por cada grupo del sistema.
+ Cada linea contiene cuatro campos separados por dos puntos ':' como por
+ ejemplo:
+\end_layout
+
+\begin_layout Standard
+users:x:100:
+\end_layout
+
+\begin_layout Standard
+portage:x:100:grg121,guess
+\end_layout
+
+\begin_layout Standard
+Los campos contienen:
+\end_layout
+
+\begin_layout Enumerate
+Nombre
+\begin_inset space ~
+\end_inset
+
+del
+\begin_inset space ~
+\end_inset
+
+grupo: único para cada grupo, solo sirve para identificar los grupos facilmente.
+\end_layout
+
+\begin_layout Enumerate
+Contraseña
+\begin_inset space ~
+\end_inset
+
+encriptada: es raro que los grupos contengan contraseña, pero se puede añadir
+ una.
+ Si existe el archivo /etc/gshadow este campo se ignora.
+ 
+\end_layout
+
+\begin_layout Enumerate
+GID: del mismo modo que con el GID, el valor 0 representa al grupo root
+\end_layout
+
+\begin_layout Enumerate
+Lista
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+usuarios: separados por una coma
+\end_layout
+
+\begin_layout Standard
+Un ejemplo del uso de /etc/group y /etc/passwd para saber los grupos en
+ los que está mi cuenta:
+\end_layout
+
+\begin_layout Standard
+cat /etc/passwd | grep -i grg121
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+grg121:x:1000:1000::/home/grg121:/bin/bash 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+cat /etc/group | grep -i grg121
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+wheel:x:10:root,grg121
+\end_layout
+
+\begin_layout Plain Layout
+audio:x:18:grg121,guess
+\end_layout
+
+\begin_layout Plain Layout
+video:x:27:root,grg121
+\end_layout
+
+\begin_layout Plain Layout
+usb:x:85:grg121
+\end_layout
+
+\begin_layout Plain Layout
+users:x:100:grg121,guess
+\end_layout
+
+\begin_layout Plain Layout
+portage:x:250:portage,grg121
+\end_layout
+
+\begin_layout Plain Layout
+plugdev:x:102:grg121 
+\end_layout
+
+\begin_layout Plain Layout
+grg121:x:1000:
+\end_layout
+
+\begin_layout Plain Layout
+vboxusers:x:996:grg121 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Respecto al GID de los nuevos usuarios, decir que cuando se crea un usuario
+ con useradd, se crea automáticamente un nuevo grupo con el nombre del usuario
+ y con GID similar al UID de este y se asigna como grupo principal.
+ Esta es la razón de que, por ejemplo aparezca 
+\begin_inset Quotes fld
+\end_inset
+
+grg121:x:1000:1000
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Creación de usuarios:
+\end_layout
+
+\begin_layout Standard
+Pasos que habría que seguir:
+\end_layout
+
+\begin_layout Enumerate
+Introducir los datos en /etc/passwd y /etc/group, rellenando el campo de
+ la contraseña con 'x'.
+\end_layout
+
+\begin_layout Enumerate
+Asignar un password a la cuenta.
+\end_layout
+
+\begin_layout Enumerate
+Establecer los parámetros de envejecimiento de la cuenta.
+\end_layout
+
+\begin_layout Enumerate
+Crear un directorio home para el usuario y asignarle los permisos adecuados.
+\end_layout
+
+\begin_layout Enumerate
+Copiar los archivos de configuración .bashrc, .emacs.d ....
+ 
+\end_layout
+
+\begin_layout Enumerate
+Establcer otras facilidades: email, permisos para imprimir, quotas..
+\end_layout
+
+\begin_layout Enumerate
+Ejecutar cualquier tarea de inicialización propia del sistema
+\end_layout
+
+\begin_layout Enumerate
+Probar la cuenta nueva.
+\end_layout
+
+\begin_layout Standard
+Todo esto se automatiza mediante el uso de los comandos 
+\begin_inset Quotes fld
+\end_inset
+
+useradd
+\begin_inset Quotes frd
+\end_inset
+
+ y 
+\begin_inset Quotes fld
+\end_inset
+
+adduser
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Hay dos archivos que configurar los parámetros por defecto a la hora de
+ crear un usuario:
+\end_layout
+
+\begin_layout Standard
+/etc/default/useradd y /etc/login.defs
+\end_layout
+
+\begin_layout Standard
+Existen algunos comandos más a tener en cuenta:
+\end_layout
+
+\begin_layout Standard
+usermod para modificar un usuario, 
+\end_layout
+
+\begin_layout Standard
+userdel para eliminarlo,
+\end_layout
+
+\begin_layout Standard
+newusers para crear varios usuarios a partir de un archivo de texto con
+ el formato de /etc/passwd
+\end_layout
+
+\begin_layout Standard
+passwd para cambiar la contraseña de la cuenta que la ejecuta o de cualquier
+ otra si es ejecutada por root con el nombre de la cuenta a cambiar como
+ argumento.
+\end_layout
+
+\begin_layout Subsubsection*
+/etc/default/useradd
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+GROUP=1001 
+\end_layout
+
+\begin_layout Plain Layout
+HOME=/home 
+\end_layout
+
+\begin_layout Plain Layout
+INACTIVE=-1 
+\end_layout
+
+\begin_layout Plain Layout
+EXPIRE= 
+\end_layout
+
+\begin_layout Plain Layout
+SHELL=/bin/sh 
+\end_layout
+
+\begin_layout Plain Layout
+SKEL=/etc/skel 
+\end_layout
+
+\begin_layout Plain Layout
+CREATE_MAIL_SPOOL=no
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El campo GROUP es ignorado por defecto y a cada usuario se le asigna un
+ nuevo grupo con GID similar al UID de dicho usuario.
+ Para evitar esto y hacer que el usuario sea añadido al grupo por defecto
+ debes crear el usuario con la opción -n.
+\end_layout
+
+\begin_layout Subsubsection*
+Grupos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+groupadd grupo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+crea un nuevo grupo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+groupmod grupo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+modifica un grupo existente
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+groupdel grupo 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+elimina un grupo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+newgrp 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+cambia de grupo activo (lanza un shell con ese grupo)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gpasswd grupo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+asigna una contraseña a un grupo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gpasswd -a user grupo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+añade un usuario a un grupo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+groups [usuario]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+informa de los grupos a los que pertenece un usuario
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+id [usuario]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+lista el identificador del usuario y los grupos a los que pertenece
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+grpck
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+comprueba la consistencia del archivo de grupos
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Usuarios y grupos especiales
+\end_layout
+
+\begin_layout Standard
+Usuarios:
+\end_layout
+
+\begin_layout Itemize
+Root
+\end_layout
+
+\begin_layout Itemize
+Bin, daemon, lp, sync, shutdown: poseen determinados archivos o ejecutan
+ servicios.
+\end_layout
+
+\begin_layout Itemize
+mail, news, ftp: asociados a herramientas/utilidades.
+\end_layout
+
+\begin_layout Itemize
+postgres, mysql, xfs: creados por herramientas instaladas para administrar
+ y ejecutar sus servicios.
+\end_layout
+
+\begin_layout Itemize
+nobody
+\begin_inset space ~
+\end_inset
+
+ó
+\begin_inset space ~
+\end_inset
+
+nfsnobody: usada por NFS y otras utilidades.
+\end_layout
+
+\begin_layout Standard
+Grupos:
+\end_layout
+
+\begin_layout Itemize
+Root, sys, sbin, daemon, adm, lp, disk, mail, ftp, nobody: grupos preconfigurado
+s en UNIX, los grupos con GID inferior a 500 están reservados para estos
+ grupos.
+\end_layout
+
+\begin_layout Itemize
+tty, dialout, disk, cdrom, audio, video: grupos especificos para dispositivos.
+\end_layout
+
+\begin_layout Itemize
+kernel: grupo propietario de los programas para leer la memoria kernel.
+\end_layout
+
+\begin_layout Itemize
+users: puede usarse como grupo por defecto para los usuarios normales del
+ sistema.
+\end_layout
+
+\begin_layout Subsection*
+Organización del sistema de archivos y gestión básica de archivos.
+\end_layout
+
+\begin_layout Standard
+Los principales directorios en Linux y el tipo de información que almacenan:
+\end_layout
+
+\begin_layout Itemize
+/bin: utilidades fundamentales para ser utilizadas por cualquier usuario
+ del sistema.
+ (Almacena código binario, ejecutable)
+\end_layout
+
+\begin_layout Itemize
+/sbin: utilidades fundamentales para ser utilizadas 
+\emph on
+solo por el usuario root.
+\end_layout
+
+\begin_layout Itemize
+/boot: archivos fundamentales del Boot Loader.
+\end_layout
+
+\begin_layout Itemize
+/dev: archivos especiales de dispositivo.
+\end_layout
+
+\begin_layout Itemize
+/etc: archivos de configuración del sistema.
+\end_layout
+
+\begin_layout Itemize
+/home: los directorios de inicio de los distintos usuarios (excepto del
+ root, que lo tiene en /root.
+\end_layout
+
+\begin_layout Itemize
+/lib: bibliotecas sin las que no pueden funcionar los programas de /bin
+ y /sbin.
+ 
+\end_layout
+
+\begin_layout Itemize
+/media: punto de montaje de dispositivos extraibles.
+ 
+\end_layout
+
+\begin_layout Itemize
+/mnt: punto de montaje para sistemas de archivos montados temporalmente.
+\end_layout
+
+\begin_layout Itemize
+/opt: aquí se almacenan los programas que no forman parte de la distribución
+ instalada en el sistema.
+\end_layout
+
+\begin_layout Itemize
+/proc: sistema de archivos virtual que hace de interfaz entre el núcleo
+ y los procesos.
+\end_layout
+
+\begin_layout Itemize
+/tmp: archivos temporales que normalmente no se mantienen una vez que se
+ apaga el sistema.
+\end_layout
+
+\begin_layout Itemize
+/usr: archivos ejecutables, de codigo fuente, bibliotecas, documentación
+ y, en general, todos los programas y utilidades.
+ Los datos que almacena deben ser de sólo lectura.
+ 
+\end_layout
+
+\begin_layout Itemize
+/var: archivos cuyo contenido se espera que cambie durante el funcionamiento
+ normal del sistema.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Acceso a información del SO relativa a sistemas de archivos.
+\end_layout
+
+\begin_layout Standard
+Dado que se trata de información del sistema, es lógico que se encuentre
+ en /etc.
+ Principalmente nos interesan dos archivos:
+\end_layout
+
+\begin_layout Enumerate
+/etc/fstab: contiene las opciones de montaje que se han utilizado para cada
+ uno de los sistemas de archivos del sistema.
+ Modo de acceso, montaje automático, ejecución de archivos, cuotas de usuario/gr
+upo, valores por defecto de montaje, etc..
+\begin_inset Newline newline
+\end_inset
+
+Ejemplo:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+# <fs> <mountpoint> <type> <opts> <dump/pass>
+\end_layout
+
+\begin_layout Plain Layout
+/dev/sda2 /boot ext2 defaults,noatime 0 2 
+\end_layout
+
+\begin_layout Plain Layout
+/dev/sda3 none swap sw 0 0 
+\end_layout
+
+\begin_layout Plain Layout
+/dev/sda4 / ext4 noatime 0 1
+\end_layout
+
+\begin_layout Plain Layout
+/dev/cdrom 
+\end_layout
+
+\begin_layout Plain Layout
+/mnt/cdrom auto noauto,user 0 0 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+/etc/mtab: contiene los dispositivos montados en el sistema y es actualizado
+ automáticamente por el comando mount.
+ Es muy similar al fstab pero no totalmente igual, ya que solo contiene
+ los archivos que están montados en ese momento y además tiene una columna
+ para indicar si el dispositivo es de lectura, escritura o ambos.
+\end_layout
+
+\begin_layout Standard
+Otro directorio del FHS que nos va a resultar útil para obtener información
+ del sistema es 
+\emph on
+/proc, 
+\emph default
+el cual contiene el sistema de archivos virtual proc.
+ El directorio contiene archivos de texto que permiten acceder a información
+ de estado del sistema:
+\end_layout
+
+\begin_layout Itemize
+/proc/filesystems: enumera, uno por linea, todos los tipos de sistemas de
+ archivos disponibles.
+\end_layout
+
+\begin_layout Itemize
+/proc/mounts: sistemas de archivos montados actualmente, incluyendo los
+ que se hayan montado manual o automáticamente tras el arranque del sistema.
+\end_layout
+
+\begin_layout Chapter*
+Sesión2: Herramientas de administración del sistema de archivos.
+\end_layout
+
+\begin_layout Standard
+Según el Filesystem Hierarchy Standard (FHS), podemos clasificar los archivos
+ en:
+\end_layout
+
+\begin_layout Itemize
+Archivos regulares (programas y datos).
+\end_layout
+
+\begin_layout Itemize
+Directorios.
+\end_layout
+
+\begin_layout Itemize
+Enlaces simbólicos .
+\end_layout
+
+\begin_layout Itemize
+Archivos de dispositivo.
+ 
+\end_layout
+
+\begin_layout Itemize
+Archivos para comunicaciones FIFO (comunican procesos).
+\end_layout
+
+\begin_layout Itemize
+Archivos para comunicaciones Socket (comunican procesos).
+\end_layout
+
+\begin_layout Section*
+Partición de dispositivos de almacenamiento secundario.
+\end_layout
+
+\begin_layout Standard
+Existen tres tipos de dispositivos de almacenamiento secundario:
+\end_layout
+
+\begin_layout Itemize
+Discos duros (SATA, IDE, SCSI,...) 
+\end_layout
+
+\begin_layout Itemize
+Memorias flash(USB, SSD,...)
+\end_layout
+
+\begin_layout Itemize
+Dispositivos RAID
+\end_layout
+
+\begin_layout Standard
+Debido a la 
+\begin_inset Quotes fld
+\end_inset
+
+compatibilidad hacia atrás
+\begin_inset Quotes frd
+\end_inset
+
+ se mantiene el uso de cuatro particiones 
+\begin_inset Quotes fld
+\end_inset
+
+primarias
+\begin_inset Quotes frd
+\end_inset
+
+ que pueden a su ver dividirse en particiones 
+\begin_inset Quotes fld
+\end_inset
+
+lógicas
+\begin_inset Quotes frd
+\end_inset
+
+.
+ Aquellas particiones primarias que pueden dividirse se conocen como partición
+ extendida.
+ 
+\end_layout
+
+\begin_layout Standard
+Usando la orden /sbin/sfdisk -T obtenemos los distintos tipos de particiones
+ posibles.
+ En el caso de una partición extendida, por ejemplo, el código es 0x05
+\end_layout
+
+\begin_layout Standard
+Respecto al número e particiones necesarias para un dispositivo, esta decisión
+ depende de si el dispositivo va a actuar como dispositivo de arranque (Boot
+ drive) o no.
+ Si queremos que el SO arranque desde el dispositivo sobre el que vamos
+ a realizar las particiones necesitaremos una partición primaria, una o
+ más particiones de swap y ninguna o más particiones primarias y lógicas.
+ Si se va a utilizar el dispositivo sólo para almacenar información, lo
+ normal es establecer una o más particiones primarias o lógicas y ninguna
+ o más particiones de swap.
+\end_layout
+
+\begin_layout Subsubsection*
+Creando y formateando particiones.
+\end_layout
+
+\begin_layout Standard
+Creamos particiones en un dispositivo como /dev/sdc con 
+\end_layout
+
+\begin_layout Standard
+sudo fdisk /dev/sdc
+\end_layout
+
+\begin_layout Standard
+Una vez hechas las distintas particiones y escrita la tabla con la opción
+ w, debemos dar formato a las particiones:
+\end_layout
+
+\begin_layout Standard
+mke2fs -t ext4/3 /dev/sdc{1,2}
+\end_layout
+
+\begin_layout Standard
+La opción -t permite seleccionar el tipo de sistema de archivos a la partición.
+\end_layout
+
+\begin_layout Standard
+Otra forma de llamar a esta opción es 
+\begin_inset Quotes fld
+\end_inset
+
+mkfs.ext4 /dev/sdc1
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una vez formateadas las particiones, podemos comprobar que se les ha dado
+ un formato correcto montandolas y ejecutando la orden mount (a secas) que
+ aporta información sobre los dispositivos montados.
+\end_layout
+
+\begin_layout Standard
+Una vez tenemos disponibles nuestros sistemas de archivos, podemos utilizar
+ tune2fs para ajustar determinados parámetros de los sistemas de archivos
+ ext2, ext3 y ext4.
+\end_layout
+
+\begin_layout Standard
+obtenemos información con la orden tune2fs -l /dev/sdc1 (por ejemplo)
+\end_layout
+
+\begin_layout Standard
+También podemos añadir una etiqueta al SA con tune2fs -L o estableder el
+ número máximo de montajes que se puede llegar a realizar sin que se realice
+ una comprobación de la consistencia del SA con tun2fs -c max-mount-counts
+ <dispositivo>
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+(a) ¿Cómo podrías conseguir que en el siguiente arranque del sistema se
+ ejecutara automáticamente e2fsck sin que se haya alcanzado el máximo número
+ de montajes? 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Con tune2fs podemos establecer un parámetro 
+\begin_inset Quotes fld
+\end_inset
+
+max-mount-counts
+\begin_inset Quotes frd
+\end_inset
+
+ (-c) y luego seleccionar el número de veces que el sistema ha sido montado
+ (-C).
+ Si el número de veces que el sistema ha sido montado es mayor que el parámetro
+ <max-mount-counts>, e2fsck comprobará el estado del sistema la próxima
+ vez que se inicie el sistema.
+ Por ejemplo:
+\begin_inset Newline newline
+\end_inset
+
+tune2fs -c 1 -C 10 /dev/sda4 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+(b) ¿Cómo podrías conseguir reservar para uso exclusivo de un usuario username
+ un número de bloques del sistema de archivos? 
+\begin_inset Newline newline
+\end_inset
+
+con tune2fs -r <numero de bloques> -u <usuario> 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+(c) Comando para que el SA etiquetado como LABEL_ext3 quede montado en el
+ directorio /mnt/SA_ext3 y en modo de solo lectura.
+ 
+\begin_inset Newline newline
+\end_inset
+
+mkdir /mnt/SA_ext3 ; mount -L LABEL_ext3 /mnt/SA_ext3 --read-only 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+(d) Comando para que el SA etiquetado como LABEL_ext4 quede montado en el
+ directorio /mnt/LABEL_ext4 y tenga sincronizadas sus operaciones de E/S
+ de modificación de directorios.
+ 
+\begin_inset Newline newline
+\end_inset
+
+mkdir /mnt/LABEL_ext4 ; mount -L LABEL_ext4 -o dirsync /mnt/LABEL_ext4.
+\end_layout
+
+\end_body
+\end_document
